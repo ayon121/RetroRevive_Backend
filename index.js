@@ -12,7 +12,7 @@ app.use(cors({
 }))
 app.use(express.json())
 //http://localhost:5173/
-//https://gamereviewtool.web.app
+//https://game-project-7e378.web.app
 
 //const uri = "mongodb+srv://Swarup1970:Swarup1970@cluster0.d4ipkul.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -35,6 +35,7 @@ async function run() {
     const Gamecollections = database.collection("AllGames");
     const Reviewcollections = database.collection("GamesReviews");
     const usercollections = database.collection("Gameusers");
+    const TopGamesCollections = database.collection("TopGames");
 
     //apis
     //userReviewGetAPI
@@ -92,21 +93,21 @@ async function run() {
     app.put('/editreview/:id', async (req, res) => {
       const reviewId = req.params.id;
       const { ratings, sms } = req.body;
-    
+
       try {
         // Find the review by its ID
         const review = await Reviewcollections.findOne({ _id: new ObjectId(reviewId) });
-    
+
         if (!review) {
           return res.status(404).json({ error: 'Review not found' });
         }
-    
+
         // Update the review with new data
         await Reviewcollections.updateOne({ _id: new ObjectId(reviewId) }, { $set: { ratings, sms } });
-    
+
         // Get the updated review
         const updatedReview = await Reviewcollections.findOne({ _id: new ObjectId(reviewId) });
-    
+
         res.json({ message: 'Review updated successfully', review: updatedReview });
       } catch (error) {
         console.error(error);
@@ -114,7 +115,7 @@ async function run() {
       }
     });
 
-   
+
     //delete single reviews by game id
     app.delete('/deletereview/:id', async (req, res) => {
       const id = req.params.id;
@@ -162,6 +163,15 @@ async function run() {
       const result = await usercollections.updateOne(filter, updateDoc)
       res.send(result)
     })
+
+    // --------------------//
+    // Top Games APi
+    app.get('/topgames', async (req, res) => {
+      const cursor = TopGamesCollections.find()
+      const result = await cursor.toArray();
+      res.send(result)
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
