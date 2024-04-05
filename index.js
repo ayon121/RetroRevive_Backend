@@ -36,6 +36,8 @@ async function run() {
     const Reviewcollections = database.collection("GamesReviews");
     const usercollections = database.collection("Gameusers");
     const TopGamesCollections = database.collection("TopGames");
+    const ProductCollections = database.collection("GameProducts");
+
 
     //apis
     //userReviewGetAPI
@@ -170,6 +172,15 @@ async function run() {
       const cursor = TopGamesCollections.find()
       const result = await cursor.toArray();
       res.send(result)
+    })
+
+    //-------------Game Products---------//
+    // homa page gaming products
+    app.get('/homeproducts', async (req, res) => {
+      const cursor = ProductCollections.find()
+      const result = await cursor.limit(4).toArray();
+      res.send(result)
+
     })
 
     // Send a ping to confirm a successful connection
