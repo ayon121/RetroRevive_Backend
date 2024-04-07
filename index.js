@@ -175,14 +175,26 @@ async function run() {
     })
 
     //-------------Game Products---------//
-    // homa page gaming products
+    // home page gaming products
     app.get('/homeproducts', async (req, res) => {
       const cursor = ProductCollections.find()
       const result = await cursor.limit(4).toArray();
       res.send(result)
 
     })
+    //all gaming products
+    app.get('/allproducts', async (req, res) => {
+      const cursor = ProductCollections.find()
+      const result = await cursor.toArray();
+      res.send(result)
+    })
 
+    //add gaming products
+    app.post('/addproduct', async (req, res) => {
+      const product = req.body;
+      const result = await ProductCollections.insertOne(product);
+      res.send(result)
+    })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
