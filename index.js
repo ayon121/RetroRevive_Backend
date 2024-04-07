@@ -188,12 +188,34 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result)
     })
-
     //add gaming products
     app.post('/addproduct', async (req, res) => {
       const product = req.body;
       const result = await ProductCollections.insertOne(product);
       res.send(result)
+    })
+
+
+    // ---------------ADMIN---------------//
+    app.get('/admin', async (req, res) => {
+      // prodcut info
+      const cursor1 = ProductCollections.find()
+      const products = await cursor1.toArray();
+      const productcount = products.length
+      //review info
+      const cursor2 = Reviewcollections.find()
+      const review = await cursor2.toArray();
+      const reviewcount = review.length
+      //user info
+      const cursor3 = usercollections.find()
+      const users = await cursor3.toArray();
+      const userscount = users.length
+      //games info
+      const cursor4 = Gamecollections.find()
+      const games = await cursor4.toArray();
+      const gamescount = games.length
+      const Allinfo = {productcount  , reviewcount , userscount , gamescount}
+      res.send(Allinfo)
     })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
