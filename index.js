@@ -184,9 +184,16 @@ async function run() {
     })
     //all gaming products
     app.get('/allproducts', async (req, res) => {
+      const page = parseInt(req.query.page)
+      const size = parseInt(req.query.size)
       const cursor = ProductCollections.find()
-      const result = await cursor.toArray();
+      const result = await cursor.skip(page * size).limit(size).toArray();
       res.send(result)
+    })
+    //all gaming products count
+    app.get('/allporductCount', async (req, res) => {
+      const count = await ProductCollections.estimatedDocumentCount()
+      res.send({count})
     })
     //add gaming products
     app.post('/addproduct', async (req, res) => {
