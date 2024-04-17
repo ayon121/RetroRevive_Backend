@@ -14,8 +14,6 @@ app.use(express.json())
 //http://localhost:5173/
 //https://game-project-7e378.web.app
 
-//const uri = "mongodb+srv://Swarup1970:Swarup1970@cluster0.d4ipkul.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
 const uri = `mongodb+srv://dataAdmin:ayon1234@cluster0.6rjuyq3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 // mongodb+srv://dataAdmin:ayon1234@cluster0.6rjuyq3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
