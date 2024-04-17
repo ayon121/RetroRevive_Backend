@@ -202,6 +202,19 @@ async function run() {
       res.send(result)
     })
 
+    // add gaming points 2
+    app.patch('/addgamepoint/:email', async (req, res) => {
+      const email = req.params.email;
+      const filter = { email : email };
+      const updateDoc = {
+        $inc: {
+          userPoints : 2
+        }
+      }
+      const result = await usercollections.updateOne(filter, updateDoc)
+      res.send(result)
+    })
+
 
     // ---------------ADMIN---------------//
     app.get('/admin', async (req, res) => {
