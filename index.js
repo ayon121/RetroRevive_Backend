@@ -35,6 +35,7 @@ async function run() {
     const usercollections = database.collection("Gameusers");
     const TopGamesCollections = database.collection("TopGames");
     const ProductCollections = database.collection("GameProducts");
+    const OrderProductCollections = database.collection("ProductsOrders");
 
 
     //apis
@@ -211,6 +212,15 @@ async function run() {
       }
       const result = await usercollections.updateOne(filter, updateDoc)
       res.send(result)
+    })
+
+    // ----------product order-----//
+    // review post
+    app.post('/orderproduct', async (req, res) => {
+      const Orders = req.body;
+      const result = await OrderProductCollections.insertOne(Orders);
+      res.send(result)
+
     })
 
 
