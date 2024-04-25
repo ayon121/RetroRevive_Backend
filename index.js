@@ -222,6 +222,12 @@ async function run() {
       res.send(result)
 
     })
+    app.get('/orderproduct', async (req, res) => {
+      const cursor =  OrderProductCollections.find()
+      const result = await cursor.toArray();
+      res.send(result)
+
+    })
 
 
     // ---------------ADMIN---------------//
